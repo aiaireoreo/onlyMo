@@ -49,6 +49,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
         let kbToolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 40))
         kbToolBar.barStyle = UIBarStyle.Default
         kbToolBar.sizeToFit()
+        kbToolBar.barStyle = .BlackTranslucent
+        kbToolBar.tintColor = UIColor.whiteColor()
+        kbToolBar.backgroundColor = UIColor.blackColor()
+
         commentField.layer.borderWidth = 0.5
         commentField.layer.borderColor = UIColor.lightGrayColor().CGColor
         commentField.layer.cornerRadius = 8
