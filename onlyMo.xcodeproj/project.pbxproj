@@ -14,6 +14,8 @@
 		01D1C7011CE5FE4D00F94B66 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01D1C6FF1CE5FE4D00F94B66 /* LaunchScreen.storyboard */; };
 		01D1C70C1CE5FE4D00F94B66 /* onlyMoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D1C70B1CE5FE4D00F94B66 /* onlyMoTests.swift */; };
 		01D1C7171CE5FE4D00F94B66 /* onlyMoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D1C7161CE5FE4D00F94B66 /* onlyMoUITests.swift */; };
+		01D1C7251CE6C03900F94B66 /* addCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D1C7241CE6C03900F94B66 /* addCheckViewController.swift */; };
+		01D1C7271CE6DC5500F94B66 /* indexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D1C7261CE6DC5500F94B66 /* indexViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		01D1C7121CE5FE4D00F94B66 /* onlyMoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = onlyMoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		01D1C7161CE5FE4D00F94B66 /* onlyMoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onlyMoUITests.swift; sourceTree = "<group>"; };
 		01D1C7181CE5FE4D00F94B66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01D1C7241CE6C03900F94B66 /* addCheckViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = addCheckViewController.swift; sourceTree = "<group>"; };
+		01D1C7261CE6DC5500F94B66 /* indexViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = indexViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +102,9 @@
 			isa = PBXGroup;
 			children = (
 				01D1C6F61CE5FE4D00F94B66 /* AppDelegate.swift */,
+				01D1C7261CE6DC5500F94B66 /* indexViewController.swift */,
 				01D1C6F81CE5FE4D00F94B66 /* ViewController.swift */,
+				01D1C7241CE6C03900F94B66 /* addCheckViewController.swift */,
 				01D1C6FA1CE5FE4D00F94B66 /* Main.storyboard */,
 				01D1C6FD1CE5FE4D00F94B66 /* Assets.xcassets */,
 				01D1C6FF1CE5FE4D00F94B66 /* LaunchScreen.storyboard */,
@@ -258,7 +264,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				01D1C6F91CE5FE4D00F94B66 /* ViewController.swift in Sources */,
+				01D1C7251CE6C03900F94B66 /* addCheckViewController.swift in Sources */,
 				01D1C6F71CE5FE4D00F94B66 /* AppDelegate.swift in Sources */,
+				01D1C7271CE6DC5500F94B66 /* indexViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

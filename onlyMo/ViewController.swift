@@ -33,7 +33,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //ユーザーデフォルトに保存
         var myDefault = NSUserDefaults.standardUserDefaults()
         if (myDefault.objectForKey("movieList") != nil){
             movieList = myDefault.objectForKey("movieList") as! [Dictionary]
