@@ -17,6 +17,7 @@
 		01D1C7251CE6C03900F94B66 /* addCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D1C7241CE6C03900F94B66 /* addCheckViewController.swift */; };
 		01D1C7271CE6DC5500F94B66 /* indexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D1C7261CE6DC5500F94B66 /* indexViewController.swift */; };
 		01D1C72F1CE6FA2000F94B66 /* customCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D1C72E1CE6FA2000F94B66 /* customCell.swift */; };
+		01D1C7311CE709CD00F94B66 /* detailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D1C7301CE709CD00F94B66 /* detailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		01D1C7241CE6C03900F94B66 /* addCheckViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = addCheckViewController.swift; sourceTree = "<group>"; };
 		01D1C7261CE6DC5500F94B66 /* indexViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = indexViewController.swift; sourceTree = "<group>"; };
 		01D1C72E1CE6FA2000F94B66 /* customCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = customCell.swift; sourceTree = "<group>"; };
+		01D1C7301CE709CD00F94B66 /* detailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = detailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				01D1C6F61CE5FE4D00F94B66 /* AppDelegate.swift */,
 				01D1C72E1CE6FA2000F94B66 /* customCell.swift */,
 				01D1C7261CE6DC5500F94B66 /* indexViewController.swift */,
+				01D1C7301CE709CD00F94B66 /* detailViewController.swift */,
 				01D1C6F81CE5FE4D00F94B66 /* ViewController.swift */,
 				01D1C7241CE6C03900F94B66 /* addCheckViewController.swift */,
 				01D1C6FA1CE5FE4D00F94B66 /* Main.storyboard */,
@@ -271,6 +274,7 @@
 				01D1C7251CE6C03900F94B66 /* addCheckViewController.swift in Sources */,
 				01D1C6F71CE5FE4D00F94B66 /* AppDelegate.swift in Sources */,
 				01D1C7271CE6DC5500F94B66 /* indexViewController.swift in Sources */,
+				01D1C7311CE709CD00F94B66 /* detailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

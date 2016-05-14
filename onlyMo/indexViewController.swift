@@ -12,7 +12,7 @@ class indexViewController: UIViewController, UICollectionViewDelegate, UICollect
 
     var movieListTmp =
         [["title":"タイタニック","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
-    
+    var selectedIndex = -1
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +31,6 @@ class indexViewController: UIViewController, UICollectionViewDelegate, UICollect
 
     }
     
-    //セクション数を１に設定
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -42,20 +41,28 @@ class indexViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell:customCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! customCell
-        
-//        let url = NSURL(string: movieListTmp[indexPath.row]["title"] as! String!);
-//        var err: NSError?;
-////        let imageData :NSData = (try! NSData(contentsOfURL:url!,options: NSDataReadingOptions.DataReadingMappedIfSafe));
-////        var img = UIImage(data:imageData);
-        
         cell.indexMovieTitle.text = movieListTmp[indexPath.row]["title"] as! String!
         cell.indexStamp.text = movieListTmp[indexPath.row]["stamp"] as! String!
-
-        
-        //セルの背景を黒に設定
-        cell.backgroundColor = UIColor.blackColor()
         return cell
-           }
+    }
+    
+    // 選択された時に行う処理
+    func collectionView(collectionView: UICollectionView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print("\(indexPath.row)個目を選択")
+        selectedIndex = indexPath.row
+        print(selectedIndex)
+        performSegueWithIdentifier("showDetail",sender: nil)
+    }
+//    
+//    // Segueで画面遷移する時
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if segue.identifier == "showDetail" {
+//        var detailVC = segue.destinationViewController as! detailViewController
+//            
+//            detailVC.detailSelectedIndex = selectedIndex
+//        }
+//    }
+//
 
 
     override func didReceiveMemoryWarning() {
