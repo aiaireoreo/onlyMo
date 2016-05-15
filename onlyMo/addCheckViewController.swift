@@ -7,15 +7,18 @@
 //
 
 import UIKit
+import Photos
 
 class addCheckViewController: UIViewController {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var countMovie: UILabel!
     @IBOutlet weak var titleRanking: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
+    
     
     var movieListTmp =
-        [["title":"タイタニック","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
+        [["title":"タイタニック","image":"","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +38,19 @@ class addCheckViewController: UIViewController {
         titleLabel.text = dic!["title"] as! String!
         countMovie.text = "現在\(cntMovie)本の映画がコレクションされています。"
         
+        // 写真を表示させる
+        var url = NSURL(string: dic!["image"] as! String!)
+        let fetchResult: PHFetchResult = PHAsset.fetchAssetsWithALAssetURLs([url!], options: nil)
+        if dic!["image"] as! String! != "" {
+            let asset: PHAsset = fetchResult.firstObject as! PHAsset
+            let manager: PHImageManager = PHImageManager()
+            manager.requestImageForAsset(asset,targetSize: CGSizeMake(100, 100),contentMode: .AspectFill,options: nil) { (image, info) -> Void in
+                self.imageView.image = image
+                //クロージャだから別世界の出来事なのでselfつけないとわかってもらえない
+            }
+        }
+        
+        
         switch(cntMovie) {
         case 1...10:
             titleRanking.text = "まだまだ映画好きとは言えません"
@@ -48,27 +64,24 @@ class addCheckViewController: UIViewController {
         
         //ナビバーのボタン設定
         var addButton : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "clickaddButton")
+        var doneButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "clickDoneButton")
         
-        var refreshButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "clickRefreshButton")
         
         //ナビゲーションバーの右側にボタン付与
-        self.navigationItem.setRightBarButtonItems([addButton], animated: true)
-        self.navigationItem.setLeftBarButtonItems([refreshButton], animated: true)
+        self.navigationItem.setRightBarButtonItems([addButton,doneButton], animated: true)
         self.navigationItem.hidesBackButton = true
     }
     
-    
-    
+    //searchButtonを押した際の処理を記述
     func clickaddButton(){
-        //searchButtonを押した際の処理を記述
         let add_new: UIViewController = ViewController()
         self.navigationController?.pushViewController(add_new, animated: true)
-        
-        
     }
     
-    func clickRefreshButton(){
-        //refreshButtonを押した際の処理を記述
+    //DoneButtonを押した際の処理を記述
+    func clickDoneButton(){
+        let index: UIViewController = indexViewController()
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
 
     override func didReceiveMemoryWarning() {

@@ -7,15 +7,24 @@
 //
 
 import UIKit
+import Photos
 
 class indexViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     var movieListTmp =
-        [["title":"タイタニック","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
+        [["title":"タイタニック","image":"","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
     var selectedIndex = -1
+    
+    //ナビバー新規追加ボタン
+    var addBtn: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // addBtnを設置
+        self.title = "My Shelf"
+        addBtn = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "onClick")
+        self.navigationItem.rightBarButtonItem = addBtn
         
         
         //ユーザーデフォルトから保存した配列を取り出して上書きする
@@ -30,6 +39,14 @@ class indexViewController: UIViewController, UICollectionViewDelegate, UICollect
 
 
     }
+    // addBtnをタップしたときのアクション
+    func onClick() {
+        //let addView = ViewController()
+        
+        let addView = self.storyboard?.instantiateViewControllerWithIdentifier("ViewController")
+        
+        self.navigationController?.pushViewController(addView!, animated: true)
+    }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
@@ -43,26 +60,50 @@ class indexViewController: UIViewController, UICollectionViewDelegate, UICollect
         let cell:customCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! customCell
         cell.indexMovieTitle.text = movieListTmp[indexPath.row]["title"] as! String!
         cell.indexStamp.text = movieListTmp[indexPath.row]["stamp"] as! String!
+        
+        // 写真を表示させる
+        var url = NSURL(string: movieListTmp[indexPath.row]["image"] as! String!)
+        let fetchResult: PHFetchResult = PHAsset.fetchAssetsWithALAssetURLs([url!], options: nil)
+        if movieListTmp[indexPath.row]["image"] as! String! != "" {
+            let asset: PHAsset = fetchResult.firstObject as! PHAsset
+            let manager: PHImageManager = PHImageManager()
+            manager.requestImageForAsset(asset,targetSize: CGSizeMake(100, 100),contentMode: .AspectFill,options: nil) { (image, info) -> Void in
+                cell.indexImage.image = image
+            }
+        }
+        
         return cell
     }
     
+    
     // 選択された時に行う処理
-    func collectionView(collectionView: UICollectionView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
         print("\(indexPath.row)個目を選択")
         selectedIndex = indexPath.row
         print(selectedIndex)
-        performSegueWithIdentifier("showDetail",sender: nil)
+       // performSegueWithIdentifier("showDetail",sender: nil)
+        
+        return true
+
     }
-//    
-//    // Segueで画面遷移する時
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if segue.identifier == "showDetail" {
-//        var detailVC = segue.destinationViewController as! detailViewController
-//            
-//            detailVC.detailSelectedIndex = selectedIndex
-//        }
+    
+    
+//    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+//        print("\(indexPath.row)個目を選択")
+//        selectedIndex = indexPath.row
+//        print(selectedIndex)
+//        performSegueWithIdentifier("showDetail",sender: nil)
 //    }
-//
+    
+    // Segueで画面遷移する時
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showDetail" {
+        var detailVC = segue.destinationViewController as! detailViewController
+            
+            detailVC.detailSelectedIndex = selectedIndex
+        }
+    }
+
 
 
     override func didReceiveMemoryWarning() {

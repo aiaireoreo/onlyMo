@@ -12,4 +12,5 @@ class customCell: UICollectionViewCell {
 
     @IBOutlet weak var indexMovieTitle: UILabel!
     @IBOutlet weak var indexStamp: UILabel!
+    @IBOutlet weak var indexImage: UIImageView!
 }

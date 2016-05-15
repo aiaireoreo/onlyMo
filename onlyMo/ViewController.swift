@@ -17,18 +17,24 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
     @IBOutlet weak var feelingField: UITextField!
     @IBOutlet weak var commentField: UITextView!
     @IBOutlet weak var addNewBtn: UIButton!
-
+    @IBOutlet weak var ImageView: UIImageView!
+    
+    
     let nowDate = NSDate()
     let dateFormat = NSDateFormatter()
     let inputDatePicker = UIDatePicker()
     
+    
     //絵文字選択
-    var data = ["💖", "😭", "😡","👻","👍"]
+    var data = ["-","💖", "😭", "😡","👻","👍"]
     var picker = UIPickerView()
     
     var movieList =
-        [["title":"タイタニック","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
+        [["title":"タイタニック","image":"","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
     
+    //選択したカメラロールの写真の場所
+    var selectAssetsUrl = ""
+//    var selectedIndex = -1
 
 
     override func viewDidLoad() {
@@ -37,9 +43,19 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
         var myDefault = NSUserDefaults.standardUserDefaults()
         if (myDefault.objectForKey("movieList") != nil){
             movieList = myDefault.objectForKey("movieList") as! [Dictionary]
-        }
-        print(movieList)
+            
+            ImageView.contentMode = .ScaleAspectFit
+            
+            
+            //配列から辞書型に変更したので一度だけユーザーデフォルトを全削除する
+//            var appDomain:String = NSBundle.mainBundle().bundleIdentifier!
+//            myDefault.removePersistentDomainForName(appDomain)
+            //ここまで書いたら一度プレビュー再生して、コメントアウト
 
+
+        }
+        
+        print(movieList)
         
         //キーボード閉じる
         titleTextField.delegate = self
@@ -52,7 +68,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
         kbToolBar.barStyle = .BlackTranslucent
         kbToolBar.tintColor = UIColor.whiteColor()
         kbToolBar.backgroundColor = UIColor.blackColor()
-
+        
         commentField.layer.borderWidth = 0.5
         commentField.layer.borderColor = UIColor.lightGrayColor().CGColor
         commentField.layer.cornerRadius = 8
@@ -110,19 +126,95 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
         
         feelingToolBar.items = [spaceBarBtn,feelingToolBarBtn]
         feelingField.inputAccessoryView = feelingToolBar
+        
+        
+        
+        
+
+    }
+        
+    func pickImageFromLibrary() {
+            
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {    //追記
+            //写真ライブラリ(カメラロール)表示用のViewControllerを宣言しているという理解
+            let controller = UIImagePickerController()
+            
+            //おまじないという認識で今は良いと思う
+            controller.delegate = self
+            
+            //新しく宣言したViewControllerでカメラとカメラロールのどちらを表示するかを指定
+            //以下はカメラロールの例
+            //.Cameraを指定した場合はカメラを呼び出し(シミュレーター不可)
+            controller.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+            //トリミングの指示
+            controller.allowsEditing = true
+            
+            //新たに追加したカメラロール表示ViewControllerをpresentViewControllerにする
+            self.presentViewController(controller, animated: true, completion: nil)
+            
+        }
+    }
+    
+//        /**
+//         写真を選択した時に呼ばれる (swift2.0対応)
+//         
+//         :param: picker:おまじないという認識で今は良いと思う
+//         :param: didFinishPickingMediaWithInfo:おまじないという認識で今は良いと思う
+//         */
+//        func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo: [String: AnyObject]) {
+//            
+//            //このif条件はおまじないという認識で今は良いと思う
+//            if didFinishPickingMediaWithInfo[UIImagePickerControllerOriginalImage] != nil {
+//                
+//                //didFinishPickingMediaWithInfo通して渡された情報(選択された画像情報が入っている？)をUIImageにCastする
+//                //そしてそれを宣言済みのimageViewへ放り込む
+//                ImageView.image = didFinishPickingMediaWithInfo[UIImagePickerControllerOriginalImage] as? UIImage
+//            }
+//            
+//            
+//            //写真選択後にカメラロール表示ViewControllerを引っ込める動作
+//            picker.dismissViewControllerAnimated(true, completion: nil)
+//        }
+//
+    
+    
+    @IBAction func tapImage(sender: UITapGestureRecognizer) {
+        print("タップされてる")
+        pickImageFromLibrary()  //ライブラリから写真を選択する
+
 
     }
     
+    //        movieList.append(["title":titleTextField.text!,"date":dateTextField.text!,"stamp":feelingField.text!,"comment":commentField.text!])
+//        
+//        print(movieList)
+//        
+//        var myDefault = NSUserDefaults.standardUserDefaults()
+//        myDefault.setObject(movieList, forKey: "movieList")
+//        myDefault.synchronize()
     
-    @IBAction func tapAddBtn(sender: AnyObject) {
-        movieList.append(["title":titleTextField.text!,"date":dateTextField.text!,"stamp":feelingField.text!,"comment":commentField.text!])
+    
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        print(movieList)
-        
-        var myDefault = NSUserDefaults.standardUserDefaults()
-        myDefault.setObject(movieList, forKey: "movieList")
-        myDefault.synchronize()
+        if segue.identifier == "showAddCheck" {
+            movieList.append(["title":titleTextField.text!,"image":selectAssetsUrl,"date":dateTextField.text!,"stamp":feelingField.text!,"comment":commentField.text!])
+            
+            print(movieList)
+            
+            var myDefault = NSUserDefaults.standardUserDefaults()
+            myDefault.setObject(movieList, forKey: "movieList")
+            myDefault.synchronize()
+
+            
+            //var addCheckVC = segue.destinationViewController as! addCheckViewController
+            
+           // addCheckVC.selectedIndex = selectedIndex
+            
+        }
     }
+
+    
     
     //絵文字選択
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
@@ -160,8 +252,107 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
     }
     
     
+    
+    //ここから画像処理
+    // 撮影が完了時した時・ライブラリを選択した後に呼ばれる
+    func imagePickerController(imagePicker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+//        if  info[UIImagePickerControllerReferenceURL] == nil {
+//            if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+//                ImageView.contentMode = .ScaleAspectFit
+//                ImageView.image = pickedImage
+//                //                let image:UIImage! = imageView.image
+//                //                UIImageWriteToSavedPhotosAlbum(image, self, "image:didFinishSavingWithError:contextInfo:", nil)
+//            }
+//            
+//            
+//            //メタデータを保存するためにはAssetsLibraryを使用する
+//            var library : ALAssetsLibrary = ALAssetsLibrary()
+//            library.writeImageToSavedPhotosAlbum(ImageView.image!.CGImage,metadata: info[UIImagePickerControllerMediaMetadata] as! [NSObject : AnyObject], completionBlock:{
+//                (assetURL: NSURL!, error: NSError!) -> Void in
+//                
+//                let url = NSURL(string: assetURL.description)
+//                
+//                //ユーザーデフォルトを用意する
+//                var myDefault = NSUserDefaults.standardUserDefaults()
+//                
+//                var peopleList:[NSDictionary] = []
+//                
+//                if myDefault.arrayForKey("myString2") != nil {
+//                    var myStr:Array = myDefault.arrayForKey("myString2")!
+//                    
+//                    if myStr.count > 0 {
+//                        peopleList = myStr as! NSArray as! [NSDictionary]
+//                    }
+//                }
+//                
+////                var data:NSDictionary = ["name":self.memberName.text!, "image":assetURL.description]
+////                peopleList.append(data)
+//                
+//                
+//                //データを書き込んで
+////                myDefault.setObject(peopleList, forKey: "myString2")
+//                //即反映させる
+//                myDefault.synchronize()
+//            })
+//            
+//            //閉じる処理
+//            imagePicker.dismissViewControllerAnimated(true, completion: nil)
+//            
+//        } else {
+            let assetURL:AnyObject = info[UIImagePickerControllerReferenceURL]!
+            selectAssetsUrl=assetURL.description
+        
+        //            let url = NSURL(string: assetURL.description)
+        
+//            //ユーザーデフォルトを用意する
+//            var myDefault = NSUserDefaults.standardUserDefaults()
+//            
+////            var peopleList:[NSDictionary] = []
+//            
+//            if myDefault.arrayForKey("myString2") != nil {
+//                var myStr:Array = myDefault.arrayForKey("myString2")!
+////                
+////                if myStr.count > 0 {
+////                    peopleList = myStr as! NSArray as! [NSDictionary]
+////                }
+//                
+//            }
+//
+//            var data:NSDictionary = ["name":memberName.text!, "image":assetURL.description]
+//            peopleList.append(data)
+            
+            
+//            //データを書き込んで
+//            myDefault.setObject(peopleList, forKey: "myString2")
+            //即反映させる
+//            myDefault.synchronize()
+        
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            ImageView.contentMode = .ScaleAspectFit
+            ImageView.image = pickedImage
+        }
 
-
+            //閉じる処理
+        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+            
+//            // テキストフィールドと写真を登録すると次へ進める
+//            if memberName.text != "" && imageView.image != "noImage.png" {
+//                nextBtn.enabled = true
+//                createBtn.enabled = true
+//            }
+//            
+//            
+//            if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+//                imageView.contentMode = .ScaleAspectFit
+//                imageView.image = pickedImage
+//            }
+            
+//        }
+        
+    }
+    
+    
 
 
     override func didReceiveMemoryWarning() {

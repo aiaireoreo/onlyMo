@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 class detailViewController: UIViewController {
     
@@ -16,9 +17,10 @@ class detailViewController: UIViewController {
     @IBOutlet weak var detailDate: UILabel!
     @IBOutlet weak var detailStamp: UILabel!
     @IBOutlet weak var detailComment: UITextView!
+    @IBOutlet weak var detailImage: UIImageView!
     
     var movieListTmp =
-        [["title":"タイタニック","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
+        [["title":"タイタニック","image":"","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
     
 
 
@@ -37,19 +39,34 @@ class detailViewController: UIViewController {
             movieListTmp = myDefault.objectForKey("movieList") as! [Dictionary]
         }
         
-        var dic = movieListTmp[detailSelectedIndex]
+    var dic = movieListTmp[detailSelectedIndex]
         detailMovieTitle.text = dic["title"] as String!
         detailDate.text = dic["date"] as String!
         detailStamp.text = dic["stamp"] as String!
         detailComment.text = dic["comment"] as String!
-
+        
+        // 写真を表示させる
+        var url = NSURL(string: dic["image"] as! String!)
+        let fetchResult: PHFetchResult = PHAsset.fetchAssetsWithALAssetURLs([url!], options: nil)
+        if dic["image"] as! String! != "" {
+            let asset: PHAsset = fetchResult.firstObject as! PHAsset
+            let manager: PHImageManager = PHImageManager()
+            manager.requestImageForAsset(asset,targetSize: CGSizeMake(100, 100),contentMode: .AspectFill,options: nil) { (image, info) -> Void in
+                self.detailImage.image = image
+                //クロージャだから別世界の出来事なのでselfつけないとわかってもらえない
+            }
+        }
     }
+
+    
     
 //        movieTitle.text = dic["title"] as! String!
 //        date.text = dic["date"] as! String!
 //        star.text = dic["star"] as! String!
 //        stamp.text = dic["stamp"] as! String!
 //
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
