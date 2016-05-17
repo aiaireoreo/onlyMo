@@ -22,11 +22,16 @@ class detailViewController: UIViewController {
     var movieListTmp =
         [["title":"タイタニック","image":"","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
     
-
-
+    //ナビバーに削除ボタンを設置
+    var deleteBtn: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //削除ボタン
+        deleteBtn = UIBarButtonItem(barButtonSystemItem: .Trash, target: self, action: "onClick")
+        self.navigationItem.rightBarButtonItem = deleteBtn
+
         //ユーザーデフォルトから保存した配列を取り出して上書きする
         var myDefault = NSUserDefaults.standardUserDefaults()
         
@@ -38,6 +43,7 @@ class detailViewController: UIViewController {
             
             movieListTmp = myDefault.objectForKey("movieList") as! [Dictionary]
         }
+        
         
     var dic = movieListTmp[detailSelectedIndex]
         detailMovieTitle.text = dic["title"] as String!
@@ -57,6 +63,13 @@ class detailViewController: UIViewController {
             }
         }
     }
+    
+    // deleteBtnをタップしたときのアクション
+    func onClick() {
+        movieListTmp.removeAtIndex(detailSelectedIndex)
+        
+    }
+
 
     
     

@@ -11,6 +11,8 @@ import Photos
 
 class indexViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
+    @IBOutlet weak var myMovieCollection: UICollectionView!
+    
     var movieListTmp =
         [["title":"タイタニック","image":"","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
     var selectedIndex = -1
@@ -27,6 +29,19 @@ class indexViewController: UIViewController, UICollectionViewDelegate, UICollect
         self.navigationItem.rightBarButtonItem = addBtn
         
         
+        
+        
+//        配列から辞書型に変更したので一度だけユーザーデフォルトを全削除する
+//        var appDomain:String = NSBundle.mainBundle().bundleIdentifier!
+//        myDefault.removePersistentDomainForName(appDomain)
+        //ここまで書いたら一度プレビュー再生して、コメントアウト
+
+
+    }
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        
         //ユーザーデフォルトから保存した配列を取り出して上書きする
         var myDefault = NSUserDefaults.standardUserDefaults()
         
@@ -35,10 +50,14 @@ class indexViewController: UIViewController, UICollectionViewDelegate, UICollect
             movieListTmp = myDefault.objectForKey("movieList") as! [Dictionary]
             
         }
+        
         print(movieListTmp)
-
-
+        
+//        myMovieCollection.reloadData()
+        
     }
+    
+    
     // addBtnをタップしたときのアクション
     func onClick() {
         //let addView = ViewController()
@@ -62,9 +81,9 @@ class indexViewController: UIViewController, UICollectionViewDelegate, UICollect
         cell.indexStamp.text = movieListTmp[indexPath.row]["stamp"] as! String!
         
         // 写真を表示させる
-        var url = NSURL(string: movieListTmp[indexPath.row]["image"] as! String!)
-        let fetchResult: PHFetchResult = PHAsset.fetchAssetsWithALAssetURLs([url!], options: nil)
-        if movieListTmp[indexPath.row]["image"] as! String! != "" {
+        if movieListTmp[indexPath.row]["image"] as! String! != "" && movieListTmp[indexPath.row]["image"] != nil{
+            var url = NSURL(string: movieListTmp[indexPath.row]["image"] as! String!)
+            let fetchResult: PHFetchResult = PHAsset.fetchAssetsWithALAssetURLs([url!], options: nil)
             let asset: PHAsset = fetchResult.firstObject as! PHAsset
             let manager: PHImageManager = PHImageManager()
             manager.requestImageForAsset(asset,targetSize: CGSizeMake(100, 100),contentMode: .AspectFill,options: nil) { (image, info) -> Void in

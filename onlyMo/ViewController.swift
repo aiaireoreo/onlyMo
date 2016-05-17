@@ -19,6 +19,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
     @IBOutlet weak var addNewBtn: UIButton!
     @IBOutlet weak var ImageView: UIImageView!
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     
     let nowDate = NSDate()
     let dateFormat = NSDateFormatter()
@@ -35,6 +37,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
     //選択したカメラロールの写真の場所
     var selectAssetsUrl = ""
 //    var selectedIndex = -1
+    
 
 
     override func viewDidLoad() {
