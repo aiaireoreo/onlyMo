@@ -39,6 +39,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ImageView.image = UIImage(named: "image.png")
+
         //ユーザーデフォルトに保存
         var myDefault = NSUserDefaults.standardUserDefaults()
         if (myDefault.objectForKey("movieList") != nil){
