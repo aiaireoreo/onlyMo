@@ -211,11 +211,13 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
     //タイトル入力時、リターン押すとキーボード下がる
     func commitButtonTapped (){
         self.view.endEditing(true)
+        commentField.tag = 0
     }
     
     //コメント入力完了時、キーボードを下げる
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        commentField.tag = 0
         return true
     }
     
@@ -224,28 +226,33 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
     
     func textViewShouldBeginEditing(textView: UITextView!) -> Bool {
         commentField = textView
+        commentField.tag = 200
         return true
+        
     }
     
     func handleKeyboardWillShowNotification(notification: NSNotification) {
         
-        let userInfo = notification.userInfo!
-        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
-        let myBoundSize: CGSize = UIScreen.mainScreen().bounds.size
-        
-        let txtLimit = commentField.frame.origin.y + commentField.frame.height + 8.0
-        let kbdLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
-        
-        print("テキストフィールドの下辺：(txtLimit)")
-        print("キーボードの上辺：(kbdLimit)")
-        
-        if txtLimit >= kbdLimit {
-            scvBackGround.contentOffset.y = txtLimit - kbdLimit
+        if commentField.tag == 200{
+
+            let userInfo = notification.userInfo!
+            let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+            let myBoundSize: CGSize = UIScreen.mainScreen().bounds.size
+            
+            let txtLimit = commentField.frame.origin.y + commentField.frame.height + 8.0
+            let kbdLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
+            
+            print("テキストフィールドの下辺：(txtLimit)")
+            print("キーボードの上辺：(kbdLimit)")
+            
+            if txtLimit >= kbdLimit {
+                scvBackGround.contentOffset.y = txtLimit - kbdLimit
+            }
         }
     }
     
     func handleKeyboardWillHideNotification(notification: NSNotification) {
-        scvBackGround.contentOffset.y = 0
+        scvBackGround.contentOffset.y = -64
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -270,6 +277,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
     func toolBarBtnPush(sender: UIBarButtonItem){
         var pickerDate = inputDatePicker.date
         dateTextField.text = dateFormat.stringFromDate(pickerDate)
+        commentField.tag = 0
         self.view.endEditing(true)
     }
     

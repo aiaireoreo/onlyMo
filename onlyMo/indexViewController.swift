@@ -23,12 +23,10 @@ class indexViewController: UIViewController, UICollectionViewDelegate, UICollect
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // addBtnを設置
         self.title = "My Shelf"
+        // addBtnを設置
         addBtn = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "onClick")
         self.navigationItem.rightBarButtonItem = addBtn
-        
-        
         
         
 //        配列から辞書型に変更したので一度だけユーザーデフォルトを全削除する
@@ -46,26 +44,21 @@ class indexViewController: UIViewController, UICollectionViewDelegate, UICollect
         var myDefault = NSUserDefaults.standardUserDefaults()
         
         if (myDefault.objectForKey("movieList") != nil){
-            
             movieListTmp = myDefault.objectForKey("movieList") as! [Dictionary]
-            
         }
         
         print(movieListTmp)
         
-//        myMovieCollection.reloadData()
-        
+        myMovieCollection.reloadData()
     }
     
     
     // addBtnをタップしたときのアクション
     func onClick() {
-        //let addView = ViewController()
-        
         let addView = self.storyboard?.instantiateViewControllerWithIdentifier("ViewController")
-        
         self.navigationController?.pushViewController(addView!, animated: true)
     }
+    
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
@@ -99,35 +92,23 @@ class indexViewController: UIViewController, UICollectionViewDelegate, UICollect
     func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
         print("\(indexPath.row)個目を選択")
         selectedIndex = indexPath.row
-        print(selectedIndex)
        // performSegueWithIdentifier("showDetail",sender: nil)
         
         return true
-
     }
     
-    
-//    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-//        print("\(indexPath.row)個目を選択")
-//        selectedIndex = indexPath.row
-//        print(selectedIndex)
-//        performSegueWithIdentifier("showDetail",sender: nil)
-//    }
     
     // Segueで画面遷移する時
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetail" {
-        var detailVC = segue.destinationViewController as! detailViewController
-            
+            var detailVC = segue.destinationViewController as! detailViewController
             detailVC.detailSelectedIndex = selectedIndex
         }
     }
 
 
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
 

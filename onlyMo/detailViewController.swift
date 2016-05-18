@@ -66,19 +66,14 @@ class detailViewController: UIViewController {
     
     // deleteBtnをタップしたときのアクション
     func onClick() {
-        movieListTmp.removeAtIndex(detailSelectedIndex)
+//        movieListTmp.removeAtIndex(detailSelectedIndex)
+//        userDefault.removeObjectForKey(keyField.text!)
+//        let defaults:String = userDefault.objectForKey("id") as! String
+//        label.text = defaults
+
         
     }
 
-
-    
-    
-//        movieTitle.text = dic["title"] as! String!
-//        date.text = dic["date"] as! String!
-//        star.text = dic["star"] as! String!
-//        stamp.text = dic["stamp"] as! String!
-//
-    
     
 
     override func didReceiveMemoryWarning() {
