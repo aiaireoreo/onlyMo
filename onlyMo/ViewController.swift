@@ -19,7 +19,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
     @IBOutlet weak var addNewBtn: UIButton!
     @IBOutlet weak var ImageView: UIImageView!
     
-    @IBOutlet weak var scrollView: UIScrollView!
+    
     
     
     let nowDate = NSDate()
@@ -52,13 +52,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
             
             ImageView.contentMode = .ScaleAspectFit
             
-            
             //配列から辞書型に変更したので一度だけユーザーデフォルトを全削除する
 //            var appDomain:String = NSBundle.mainBundle().bundleIdentifier!
 //            myDefault.removePersistentDomainForName(appDomain)
             //ここまで書いたら一度プレビュー再生して、コメントアウト
-
-
         }
         
         print(movieList)
@@ -83,13 +80,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
         kbToolBar.items = [spacer, commitButton]
         commentField.inputAccessoryView = kbToolBar
         
-        //日付フィールドの設定
+        // DatePickerの設定(日付用)
         dateFormat.dateFormat = "yyyy/MM/dd"
         dateTextField.text = dateFormat.stringFromDate(nowDate)
         self.dateTextField.delegate = self
-        
-        
-        // DatePickerの設定(日付用)
         inputDatePicker.datePickerMode = UIDatePickerMode.Date
         dateTextField.inputView = inputDatePicker
         
@@ -100,12 +94,11 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
         pickerToolBar.tintColor = UIColor.whiteColor()
         pickerToolBar.backgroundColor = UIColor.blackColor()
         
-        //ボタンの設定
-        //右寄せのためのスペース設定
+        //入力完了ボタン右寄せのためのスペース設定
         let spaceBarBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace,target: self,action: "")
         
         //日付選択の完了ボタン
-        let toolBarBtn      = UIBarButtonItem(title: "Done", style: .Done, target: self, action: "toolBarBtnPush:")
+        let toolBarBtn = UIBarButtonItem(title: "Done", style: .Done, target: self, action: "toolBarBtnPush:")
         
         //ツールバーにボタンを表示
         pickerToolBar.items = [spaceBarBtn,toolBarBtn]
@@ -123,38 +116,27 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
         feelingToolBar.tintColor = UIColor.whiteColor()
         feelingToolBar.backgroundColor = UIColor.blackColor()
         
-        //ボタンの設定
-        //右寄せのためのスペース設定
+        //入力完了ボタン・右寄せのためのスペース設定
         let spaceBarBtn2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace,target: self,action: "")
         
         //絵文字選択の完了ボタン
         let feelingToolBarBtn = UIBarButtonItem(title: "Done", style: .Done, target: self, action: "toolBarBtnPush:")
-        
         feelingToolBar.items = [spaceBarBtn,feelingToolBarBtn]
         feelingField.inputAccessoryView = feelingToolBar
-        
-        
-        
-        
-
     }
+    
         
     func pickImageFromLibrary() {
             
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {    //追記
             //写真ライブラリ(カメラロール)表示用のViewControllerを宣言しているという理解
             let controller = UIImagePickerController()
-            
             //おまじないという認識で今は良いと思う
             controller.delegate = self
-            
             //新しく宣言したViewControllerでカメラとカメラロールのどちらを表示するかを指定
-            //以下はカメラロールの例
-            //.Cameraを指定した場合はカメラを呼び出し(シミュレーター不可)
             controller.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-            //トリミングの指示
-            controller.allowsEditing = true
-            
+            //トリミングが正方形だけなので、falseに設定
+            controller.allowsEditing = false
             //新たに追加したカメラロール表示ViewControllerをpresentViewControllerにする
             self.presentViewController(controller, animated: true, completion: nil)
             
@@ -187,18 +169,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
     @IBAction func tapImage(sender: UITapGestureRecognizer) {
         print("タップされてる")
         pickImageFromLibrary()  //ライブラリから写真を選択する
-
-
     }
-    
-    //        movieList.append(["title":titleTextField.text!,"date":dateTextField.text!,"stamp":feelingField.text!,"comment":commentField.text!])
-//        
-//        print(movieList)
-//        
-//        var myDefault = NSUserDefaults.standardUserDefaults()
-//        myDefault.setObject(movieList, forKey: "movieList")
-//        myDefault.synchronize()
-    
     
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -212,9 +183,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
             myDefault.setObject(movieList, forKey: "movieList")
             myDefault.synchronize()
 
-            
             //var addCheckVC = segue.destinationViewController as! addCheckViewController
-            
            // addCheckVC.selectedIndex = selectedIndex
             
         }
@@ -239,18 +208,65 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
         return data[row]
     }
     
-    //タイトル入力完了リターン
+    //タイトル入力時、リターン押すとキーボード下がる
     func commitButtonTapped (){
         self.view.endEditing(true)
     }
     
-    //コメント入力完了ボタン
+    //コメント入力完了時、キーボードを下げる
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    //完了を押すとピッカーの値を、テキストフィールドに挿入して、ピッカーを閉じる
+    //キーボードで入力画面が隠れないためのスクロール
+    @IBOutlet weak var scvBackGround: UIScrollView!
+    
+    func textViewShouldBeginEditing(textView: UITextView!) -> Bool {
+        commentField = textView
+        return true
+    }
+    
+    func handleKeyboardWillShowNotification(notification: NSNotification) {
+        
+        let userInfo = notification.userInfo!
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let myBoundSize: CGSize = UIScreen.mainScreen().bounds.size
+        
+        let txtLimit = commentField.frame.origin.y + commentField.frame.height + 8.0
+        let kbdLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
+        
+        print("テキストフィールドの下辺：(txtLimit)")
+        print("キーボードの上辺：(kbdLimit)")
+        
+        if txtLimit >= kbdLimit {
+            scvBackGround.contentOffset.y = txtLimit - kbdLimit
+        }
+    }
+    
+    func handleKeyboardWillHideNotification(notification: NSNotification) {
+        scvBackGround.contentOffset.y = 0
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: "handleKeyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: "handleKeyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
+
+    
+    //日付選択時、Doneを押すとピッカーの値をテキストフィールドに挿入して、ピッカーを閉じる
     func toolBarBtnPush(sender: UIBarButtonItem){
         var pickerDate = inputDatePicker.date
         dateTextField.text = dateFormat.stringFromDate(pickerDate)
@@ -258,9 +274,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
     }
     
     
-    
     //ここから画像処理
-    // 撮影が完了時した時・ライブラリを選択した後に呼ばれる
     func imagePickerController(imagePicker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
 //        if  info[UIImagePickerControllerReferenceURL] == nil {
@@ -338,8 +352,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
             ImageView.contentMode = .ScaleAspectFit
             ImageView.image = pickedImage
         }
+        
+        
 
-            //閉じる処理
+        //閉じる処理
         imagePicker.dismissViewControllerAnimated(true, completion: nil)
             
 //            // テキストフィールドと写真を登録すると次へ進める
