@@ -34,7 +34,8 @@ class detailViewController: UIViewController {
 
         //ユーザーデフォルトから保存した配列を取り出して上書きする
         var myDefault = NSUserDefaults.standardUserDefaults()
-        
+        //コメント編集不可
+        self.detailComment.editable = false
         
         
         //保存ボタンが押されなかった場合にnilが入るタイミングがある
@@ -64,13 +65,45 @@ class detailViewController: UIViewController {
         }
     }
     
-    // deleteBtnをタップしたときのアクション
+    // deleteBtnをタップしたときの削除アクションでアラートを表示
     func onClick() {
-//        movieListTmp.removeAtIndex(detailSelectedIndex)
-//        userDefault.removeObjectForKey(keyField.text!)
-//        let defaults:String = userDefault.objectForKey("id") as! String
-//        label.text = defaults
+        
+        //アラート作成
+        var alertController = UIAlertController(
+            title: "注意",
+            message: "この映画を削除しますか？",
+            preferredStyle: .Alert)
+        
+        //OKボタン
+        alertController.addAction(UIAlertAction(
+            title: "削除",
+            style:  .Default,
+            handler: {
+                (action: UIAlertAction!) -> Void in
+                //        movieListTmp.removeAtIndex(detailSelectedIndex)
+                //        userDefault.removeObjectForKey(keyField.text!)
+                //        let defaults:String = userDefault.objectForKey("id") as! String
+                //        label.text = defaults
+                
 
+        }))
+        
+        //キャンセルボタン
+        alertController.addAction(UIAlertAction(
+            title: "キャンセル",
+            style:  .Cancel,
+            handler: {
+                (action:UIAlertAction!) -> Void in
+                print("Cancel")
+        }))
+        
+        //アラートを表示する
+        presentViewController(alertController, animated: true, completion: nil)
+        
+        //削除ボタンを押したとき
+        func myDelete() {
+            print("OK")
+        }
         
     }
 

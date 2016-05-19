@@ -19,6 +19,7 @@
 		01D1C7271CE6DC5500F94B66 /* indexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D1C7261CE6DC5500F94B66 /* indexViewController.swift */; };
 		01D1C72F1CE6FA2000F94B66 /* customCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D1C72E1CE6FA2000F94B66 /* customCell.swift */; };
 		01D1C7311CE709CD00F94B66 /* detailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D1C7301CE709CD00F94B66 /* detailViewController.swift */; };
+		01F56AEB1CED8C0F0092CD1A /* CosmosDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F56AEA1CED8C0F0092CD1A /* CosmosDistrib.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		01D1C7261CE6DC5500F94B66 /* indexViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = indexViewController.swift; sourceTree = "<group>"; };
 		01D1C72E1CE6FA2000F94B66 /* customCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = customCell.swift; sourceTree = "<group>"; };
 		01D1C7301CE709CD00F94B66 /* detailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = detailViewController.swift; sourceTree = "<group>"; };
+		01F56AEA1CED8C0F0092CD1A /* CosmosDistrib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CosmosDistrib.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 		01D1C6F51CE5FE4D00F94B66 /* onlyMo */ = {
 			isa = PBXGroup;
 			children = (
+				01F56AEA1CED8C0F0092CD1A /* CosmosDistrib.swift */,
 				01D1C6F61CE5FE4D00F94B66 /* AppDelegate.swift */,
 				01D1C72E1CE6FA2000F94B66 /* customCell.swift */,
 				01D1C7261CE6DC5500F94B66 /* indexViewController.swift */,
@@ -277,6 +280,7 @@
 				01D1C72F1CE6FA2000F94B66 /* customCell.swift in Sources */,
 				01D1C7251CE6C03900F94B66 /* addCheckViewController.swift in Sources */,
 				01D1C6F71CE5FE4D00F94B66 /* AppDelegate.swift in Sources */,
+				01F56AEB1CED8C0F0092CD1A /* CosmosDistrib.swift in Sources */,
 				01D1C7271CE6DC5500F94B66 /* indexViewController.swift in Sources */,
 				01D1C7311CE709CD00F94B66 /* detailViewController.swift in Sources */,
 			);

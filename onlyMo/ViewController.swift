@@ -135,8 +135,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
             controller.delegate = self
             //新しく宣言したViewControllerでカメラとカメラロールのどちらを表示するかを指定
             controller.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-            //トリミングが正方形だけなので、falseに設定
-            controller.allowsEditing = false
+            //トリミング
+            controller.allowsEditing = true
             //新たに追加したカメラロール表示ViewControllerをpresentViewControllerにする
             self.presentViewController(controller, animated: true, completion: nil)
             
@@ -148,7 +148,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
 //         
 //         :param: picker:おまじないという認識で今は良いと思う
 //         :param: didFinishPickingMediaWithInfo:おまじないという認識で今は良いと思う
-//         */
+////         */
 //        func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo: [String: AnyObject]) {
 //            
 //            //このif条件はおまじないという認識で今は良いと思う
@@ -158,12 +158,12 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
 //                //そしてそれを宣言済みのimageViewへ放り込む
 //                ImageView.image = didFinishPickingMediaWithInfo[UIImagePickerControllerOriginalImage] as? UIImage
 //            }
-//            
+//
 //            
 //            //写真選択後にカメラロール表示ViewControllerを引っ込める動作
 //            picker.dismissViewControllerAnimated(true, completion: nil)
 //        }
-//
+
     
     
     @IBAction func tapImage(sender: UITapGestureRecognizer) {
@@ -171,23 +171,73 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
         pickImageFromLibrary()  //ライブラリから写真を選択する
     }
     
+//
+//    @IBAction func tapAdd(sender: UIButton) {
+//        if titleTextField.text!.isEmpty {
+//            let alertController = UIAlertController(title: "タイトルが入力されていません。", message: "タイトルの入力は必須です。", preferredStyle: .Alert)
+//            
+//            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+//            alertController.addAction(defaultAction)
+//            
+//            presentViewController(alertController, animated: true, completion: nil);            return
+//        }
+//
+//     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        if segue.identifier == "showAddCheck" {
-            movieList.append(["title":titleTextField.text!,"image":selectAssetsUrl,"date":dateTextField.text!,"stamp":feelingField.text!,"comment":commentField.text!])
+    //登録完了ボタンが押されたら条件分岐してセグエにデータを渡す
+    override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
+        if titleTextField.text!.isEmpty {
+            let alertController = UIAlertController(title: "タイトルが入力されていません。", message: "タイトルの入力は必須です。", preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            presentViewController(alertController, animated: true, completion: nil)
+            return false
             
-            print(movieList)
+        } else {
             
+            if ImageView.image == UIImage(named: "image.png") {//もしサンプル画像のままだったら
+                let alertController = UIAlertController(title: "画像が登録されていません。", message: "画像の登録は必須です。", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                presentViewController(alertController, animated: true, completion: nil)
+                return false
+
+                
+            } else {
+        movieList.append(["title":titleTextField.text!,"image":selectAssetsUrl,"date":dateTextField.text!,"stamp":feelingField.text!,"comment":commentField.text!])
             var myDefault = NSUserDefaults.standardUserDefaults()
             myDefault.setObject(movieList, forKey: "movieList")
             myDefault.synchronize()
+            
+//            var addCheckVC = segue.destinationViewController as! addCheckViewController
+//            addCheckVC.selectedIndex = selectedIndex
 
-            //var addCheckVC = segue.destinationViewController as! addCheckViewController
-           // addCheckVC.selectedIndex = selectedIndex
+            
+            return true
+                
+            }
             
         }
     }
+    
+    
+    
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        
+//        if segue.identifier == "showAddCheck" {
+//            movieList.append(["title":titleTextField.text!,"image":selectAssetsUrl,"date":dateTextField.text!,"stamp":feelingField.text!,"comment":commentField.text!])
+//            
+//            print(movieList)
+//            
+//            var myDefault = NSUserDefaults.standardUserDefaults()
+//            myDefault.setObject(movieList, forKey: "movieList")
+//            myDefault.synchronize()
+//
+//            //var addCheckVC = segue.destinationViewController as! addCheckViewController
+//           // addCheckVC.selectedIndex = selectedIndex
+//            
+//        }
+//    }
 
     
     
@@ -228,7 +278,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
         commentField = textView
         commentField.tag = 200
         return true
-        
     }
     
     func handleKeyboardWillShowNotification(notification: NSNotification) {
@@ -252,7 +301,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
     }
     
     func handleKeyboardWillHideNotification(notification: NSNotification) {
-        scvBackGround.contentOffset.y = -64
+        scvBackGround.contentOffset.y = -64 //ここでスクロールの上がり値を微調整する
     }
     
     override func viewWillAppear(animated: Bool) {
