@@ -80,11 +80,15 @@ class detailViewController: UIViewController {
             style:  .Default,
             handler: {
                 (action: UIAlertAction!) -> Void in
-                //        movieListTmp.removeAtIndex(detailSelectedIndex)
-                //        userDefault.removeObjectForKey(keyField.text!)
-                //        let defaults:String = userDefault.objectForKey("id") as! String
-                //        label.text = defaults
+                print ("削除")
+                self.movieListTmp.removeAtIndex(self.detailSelectedIndex)
                 
+                //削除後の残ったデータを保存しなおしている
+                var myDefault = NSUserDefaults.standardUserDefaults()
+                myDefault.setObject(self.movieListTmp, forKey: "movieList")
+                myDefault.synchronize()
+                let index: UIViewController = indexViewController()
+                self.navigationController?.popToRootViewControllerAnimated(true)
 
         }))
         
