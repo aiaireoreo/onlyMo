@@ -377,8 +377,16 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
 //            imagePicker.dismissViewControllerAnimated(true, completion: nil)
 //            
 //        } else {
-            let assetURL:AnyObject = info[UIImagePickerControllerReferenceURL]!
-            selectAssetsUrl=assetURL.description
+//            let assetURL:AnyObject = info[UIImagePickerControllerReferenceURL]!
+//            selectAssetsUrl=assetURL.description
+        let editImage:UIImage = info[UIImagePickerControllerEditedImage] as! UIImage
+        
+        ALAssetsLibrary().writeImageToSavedPhotosAlbum(editImage.CGImage, orientation: ALAssetOrientation(rawValue: editImage.imageOrientation.rawValue)!, completionBlock: { (path:NSURL!, error:NSError!) -> Void in
+            print("\(path)")
+            self.selectAssetsUrl=path.description
+        
+        })
+        
         
         //            let url = NSURL(string: assetURL.description)
         
@@ -405,7 +413,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
             //即反映させる
 //            myDefault.synchronize()
         
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
             ImageView.contentMode = .ScaleAspectFit
             ImageView.image = pickedImage
         }

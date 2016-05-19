@@ -18,7 +18,7 @@ class detailViewController: UIViewController {
     @IBOutlet weak var detailStamp: UILabel!
     @IBOutlet weak var detailComment: UITextView!
     @IBOutlet weak var detailImage: UIImageView!
-    
+    @IBOutlet weak var starZone: CosmosView!
     var movieListTmp =
         [["title":"タイタニック","image":"","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
     
@@ -51,6 +51,8 @@ class detailViewController: UIViewController {
         detailDate.text = dic["date"] as String!
         detailStamp.text = dic["stamp"] as String!
         detailComment.text = dic["comment"] as String!
+        
+        starZone.rating = 1
         
         // 写真を表示させる
         var url = NSURL(string: dic["image"] as! String!)
