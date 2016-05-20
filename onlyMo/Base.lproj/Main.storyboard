@@ -86,6 +86,7 @@
                         <outlet property="dateTextField" destination="f57-sc-dOl" id="M0c-ck-JNs"/>
                         <outlet property="feelingField" destination="Gi2-sK-ov2" id="XCE-S7-3bT"/>
                         <outlet property="scvBackGround" destination="OJC-yd-otm" id="78K-Jd-MCv"/>
+                        <outlet property="starZone" destination="DND-Dr-WC6" id="Uv2-BD-eZ3"/>
                         <outlet property="titleTextField" destination="DS0-1e-rkx" id="oeS-Ue-boe"/>
                     </connections>
                 </viewController>
@@ -259,7 +260,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IVm-QV-q2P" customClass="CosmosView" customModule="onlyMo" customModuleProvider="target">
-                                <rect key="frame" x="152" y="252" width="162" height="50"/>
+                                <rect key="frame" x="152" y="252" width="162" height="37"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="totalStars">

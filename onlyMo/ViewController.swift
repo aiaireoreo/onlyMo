@@ -18,7 +18,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
     @IBOutlet weak var commentField: UITextView!
     @IBOutlet weak var addNewBtn: UIButton!
     @IBOutlet weak var ImageView: UIImageView!
-    
+    @IBOutlet weak var starZone: CosmosView!
     
     
     
@@ -52,10 +52,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
             
             ImageView.contentMode = .ScaleAspectFit
             
-            //配列から辞書型に変更したので一度だけユーザーデフォルトを全削除する
+//            //配列から辞書型に変更したので一度だけユーザーデフォルトを全削除する
 //            var appDomain:String = NSBundle.mainBundle().bundleIdentifier!
 //            myDefault.removePersistentDomainForName(appDomain)
-            //ここまで書いたら一度プレビュー再生して、コメントアウト
+//            //ここまで書いたら一度プレビュー再生して、コメントアウト
         }
         
         print(movieList)
@@ -204,7 +204,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
 
                 
             } else {
-        movieList.append(["title":titleTextField.text!,"image":selectAssetsUrl,"date":dateTextField.text!,"stamp":feelingField.text!,"comment":commentField.text!])
+        movieList.append(["title":titleTextField.text!,"image":selectAssetsUrl,"date":dateTextField.text!,"star":starZone.rating.description,"stamp":feelingField.text!,"comment":commentField.text!])
             var myDefault = NSUserDefaults.standardUserDefaults()
             myDefault.setObject(movieList, forKey: "movieList")
             myDefault.synchronize()
@@ -422,20 +422,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
 
         //閉じる処理
         imagePicker.dismissViewControllerAnimated(true, completion: nil)
-            
-//            // テキストフィールドと写真を登録すると次へ進める
-//            if memberName.text != "" && imageView.image != "noImage.png" {
-//                nextBtn.enabled = true
-//                createBtn.enabled = true
-//            }
-//            
-//            
-//            if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-//                imageView.contentMode = .ScaleAspectFit
-//                imageView.image = pickedImage
-//            }
-            
-//        }
         
     }
     

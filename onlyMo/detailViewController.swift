@@ -19,8 +19,10 @@ class detailViewController: UIViewController {
     @IBOutlet weak var detailComment: UITextView!
     @IBOutlet weak var detailImage: UIImageView!
     @IBOutlet weak var starZone: CosmosView!
+    
     var movieListTmp =
         [["title":"タイタニック","image":"","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
+    
     
     //ナビバーに削除ボタンを設置
     var deleteBtn: UIBarButtonItem!
@@ -46,26 +48,47 @@ class detailViewController: UIViewController {
         }
         
         
-    var dic = movieListTmp[detailSelectedIndex]
+        var dic = movieListTmp[detailSelectedIndex]
         detailMovieTitle.text = dic["title"] as String!
         detailDate.text = dic["date"] as String!
         detailStamp.text = dic["stamp"] as String!
         detailComment.text = dic["comment"] as String!
+        starZone.rating = atof(dic["star"]!)
+        //文字型をdouble型に変換のatof
+//        starZone.rating = 1
+
         
-        starZone.rating = 1
-        
+//        // 写真を表示させる
+//        var url = NSURL(string: dic["image"] as! String!)
+//        let fetchResult: PHFetchResult = PHAsset.fetchAssetsWithALAssetURLs([url!], options: nil)
+//        if dic["image"] as! String! != "" {
+//            let asset: PHAsset = fetchResult.firstObject as! PHAsset
+//            let manager: PHImageManager = PHImageManager()
+//            manager.requestImageForAsset(asset,targetSize: CGSizeMake(100, 100),contentMode: .AspectFill,options: nil) { (image, info) -> Void in
+//                self.detailImage.image = image
+//                //クロージャだから別世界の出来事なのでselfつけないとわかってもらえない
+//            }
+//        }
+
+
         // 写真を表示させる
         var url = NSURL(string: dic["image"] as! String!)
         let fetchResult: PHFetchResult = PHAsset.fetchAssetsWithALAssetURLs([url!], options: nil)
-        if dic["image"] as! String! != "" {
-            let asset: PHAsset = fetchResult.firstObject as! PHAsset
-            let manager: PHImageManager = PHImageManager()
-            manager.requestImageForAsset(asset,targetSize: CGSizeMake(100, 100),contentMode: .AspectFill,options: nil) { (image, info) -> Void in
-                self.detailImage.image = image
-                //クロージャだから別世界の出来事なのでselfつけないとわかってもらえない
+        
+        if dic["image"] as! String! == ""{
+            
+                 self.detailImage.image = UIImage(named: "image.png")
+
+        } else {
+                let asset: PHAsset = fetchResult.firstObject as! PHAsset
+                let manager: PHImageManager = PHImageManager()
+                manager.requestImageForAsset(asset,targetSize: CGSizeMake(100, 100),contentMode: .AspectFill,options: nil) { (image, info) -> Void in
+                    self.detailImage.image = image
+                    //クロージャだから別世界の出来事なのでselfつけないとわかってもらえない
             }
         }
     }
+
     
     // deleteBtnをタップしたときの削除アクションでアラートを表示
     func onClick() {
