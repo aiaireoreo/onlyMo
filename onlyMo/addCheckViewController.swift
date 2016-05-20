@@ -44,7 +44,7 @@ class addCheckViewController: UIViewController {
         if dic!["image"] as! String! != "" {
             let asset: PHAsset = fetchResult.firstObject as! PHAsset
             let manager: PHImageManager = PHImageManager()
-            manager.requestImageForAsset(asset,targetSize: CGSizeMake(100, 100),contentMode: .AspectFill,options: nil) { (image, info) -> Void in
+            manager.requestImageForAsset(asset,targetSize: CGSizeMake(500, 500),contentMode: .AspectFill,options: nil) { (image, info) -> Void in
                 self.imageView.image = image
                 //クロージャだから別世界の出来事なのでselfつけないとわかってもらえない
             }
@@ -63,20 +63,20 @@ class addCheckViewController: UIViewController {
         
         
         //ナビバーのボタン設定
-        var addButton : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "clickaddButton")
+//        var addButton : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "clickaddButton")
         var doneButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "clickDoneButton")
         
         
         //ナビゲーションバーの右側にボタン付与
-        self.navigationItem.setRightBarButtonItems([addButton,doneButton], animated: true)
+        self.navigationItem.setRightBarButtonItems([doneButton], animated: true)
         self.navigationItem.hidesBackButton = true
     }
     
-    //searchButtonを押した際の処理を記述
-    func clickaddButton(){
-        let add_new: UIViewController = ViewController()
-        self.navigationController?.pushViewController(add_new, animated: true)
-    }
+//    //searchButtonを押した際の処理を記述
+//    func clickaddButton(){
+//        let add_new: UIViewController = ViewController()
+//        self.navigationController?.pushViewController(add_new, animated: true)
+//    }
     
     //DoneButtonを押した際の処理を記述
     func clickDoneButton(){

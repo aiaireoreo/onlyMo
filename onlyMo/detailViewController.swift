@@ -82,7 +82,7 @@ class detailViewController: UIViewController {
         } else {
                 let asset: PHAsset = fetchResult.firstObject as! PHAsset
                 let manager: PHImageManager = PHImageManager()
-                manager.requestImageForAsset(asset,targetSize: CGSizeMake(100, 100),contentMode: .AspectFill,options: nil) { (image, info) -> Void in
+                manager.requestImageForAsset(asset,targetSize: CGSizeMake(500, 500),contentMode: .AspectFill,options: nil) { (image, info) -> Void in
                     self.detailImage.image = image
                     //クロージャだから別世界の出来事なのでselfつけないとわかってもらえない
             }

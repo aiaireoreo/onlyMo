@@ -53,6 +53,8 @@ class indexViewController: UIViewController, UICollectionViewDelegate, UICollect
     }
     
     
+    
+    
     // addBtnをタップしたときのアクション
     func onClick() {
         let addView = self.storyboard?.instantiateViewControllerWithIdentifier("ViewController")
@@ -79,7 +81,7 @@ class indexViewController: UIViewController, UICollectionViewDelegate, UICollect
             let fetchResult: PHFetchResult = PHAsset.fetchAssetsWithALAssetURLs([url!], options: nil)
             let asset: PHAsset = fetchResult.firstObject as! PHAsset
             let manager: PHImageManager = PHImageManager()
-            manager.requestImageForAsset(asset,targetSize: CGSizeMake(100, 100),contentMode: .AspectFill,options: nil) { (image, info) -> Void in
+            manager.requestImageForAsset(asset,targetSize: CGSizeMake(500, 500),contentMode: .AspectFill,options: nil) { (image, info) -> Void in
                 cell.indexImage.image = image
             }
         }
