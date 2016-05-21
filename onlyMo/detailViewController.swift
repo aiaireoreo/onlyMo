@@ -21,7 +21,7 @@ class detailViewController: UIViewController {
     @IBOutlet weak var starZone: CosmosView!
     
     var movieListTmp =
-        [["title":"タイタニック","image":"","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
+        [["title":"TOY STORY3","image":"","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
     
     
     //ナビバーに削除ボタンを設置
@@ -77,7 +77,7 @@ class detailViewController: UIViewController {
         
         if dic["image"] as! String! == ""{
             
-                 self.detailImage.image = UIImage(named: "image.png")
+                 self.detailImage.image = UIImage(named: "toystory.jpeg")
 
         } else {
                 let asset: PHAsset = fetchResult.firstObject as! PHAsset

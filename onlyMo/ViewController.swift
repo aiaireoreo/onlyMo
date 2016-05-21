@@ -32,7 +32,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
     var picker = UIPickerView()
     
     var movieList =
-        [["title":"タイタニック","image":"","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
+        [["title":"TOY STORY3","image":"","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
     
     //選択したカメラロールの写真の場所
     var selectAssetsUrl = ""
@@ -53,8 +53,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
             ImageView.contentMode = .ScaleAspectFit
             
 //            //配列から辞書型に変更したので一度だけユーザーデフォルトを全削除する
-//            var appDomain:String = NSBundle.mainBundle().bundleIdentifier!
-//            myDefault.removePersistentDomainForName(appDomain)
+            var appDomain:String = NSBundle.mainBundle().bundleIdentifier!
+            myDefault.removePersistentDomainForName(appDomain)
 //            //ここまで書いたら一度プレビュー再生して、コメントアウト
         }
         
@@ -65,7 +65,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
         commentField.delegate = self
         
         //テキストビューの完了ボタン
-        let kbToolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 40))
+        let kbToolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 10))
         kbToolBar.barStyle = UIBarStyle.Default
         kbToolBar.sizeToFit()
         kbToolBar.barStyle = .BlackTranslucent

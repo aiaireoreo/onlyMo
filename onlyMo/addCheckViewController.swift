@@ -18,7 +18,7 @@ class addCheckViewController: UIViewController {
     
     
     var movieListTmp =
-        [["title":"タイタニック","image":"","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
+        [["title":"TOY STORY3","image":"","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
 
     override func viewDidLoad() {
         super.viewDidLoad()

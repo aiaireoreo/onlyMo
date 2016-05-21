@@ -14,7 +14,7 @@ class indexViewController: UIViewController, UICollectionViewDelegate, UICollect
     @IBOutlet weak var myMovieCollection: UICollectionView!
     
     var movieListTmp =
-        [["title":"タイタニック","image":"","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
+        [["title":"TOYSTORY3","image":"","date":"2016-05-15","star":"5","stamp":"💖","comment":"love!"]]
     var selectedIndex = -1
     
     //ナビバー新規追加ボタン
@@ -75,19 +75,37 @@ class indexViewController: UIViewController, UICollectionViewDelegate, UICollect
         cell.indexMovieTitle.text = movieListTmp[indexPath.row]["title"] as! String!
         cell.indexStamp.text = movieListTmp[indexPath.row]["stamp"] as! String!
         
+        
+        
+//        if dic["image"] as! String! == ""{
+//            
+//            self.detailImage.image = UIImage(named: "toystory.jpeg")
+//            
+//        } else {
+//            let asset: PHAsset = fetchResult.firstObject as! PHAsset
+//            let manager: PHImageManager = PHImageManager()
+//            manager.requestImageForAsset(asset,targetSize: CGSizeMake(500, 500),contentMode: .AspectFill,options: nil) { (image, info) -> Void in
+//                self.detailImage.image = image
+//                //クロージャだから別世界の出来事なのでselfつけないとわかってもらえない
+//            }
+//        }
+
         // 写真を表示させる
         if movieListTmp[indexPath.row]["image"] as! String! != "" && movieListTmp[indexPath.row]["image"] != nil{
             var url = NSURL(string: movieListTmp[indexPath.row]["image"] as! String!)
             let fetchResult: PHFetchResult = PHAsset.fetchAssetsWithALAssetURLs([url!], options: nil)
             let asset: PHAsset = fetchResult.firstObject as! PHAsset
             let manager: PHImageManager = PHImageManager()
-            manager.requestImageForAsset(asset,targetSize: CGSizeMake(500, 500),contentMode: .AspectFill,options: nil) { (image, info) -> Void in
+            manager.requestImageForAsset(asset,targetSize: CGSizeMake(5, 500),contentMode: .AspectFill,options: nil) { (image, info) -> Void in
                 cell.indexImage.image = image
             }
-        }
-        
+        }else{
+                cell.indexImage.image = UIImage(named: "toystory.jpeg")
+
+            }
         return cell
-    }
+
+        }
     
     
     // 選択された時に行う処理
