@@ -65,7 +65,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
         commentField.delegate = self
         
         //テキストビューの完了ボタン
-        let kbToolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 10))
+        let kbToolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 40))
         kbToolBar.barStyle = UIBarStyle.Default
         kbToolBar.sizeToFit()
         kbToolBar.barStyle = .BlackTranslucent
