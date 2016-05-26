@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import GoogleMobileAds
 
 class indexViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
@@ -19,6 +20,13 @@ class indexViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     //ナビバー新規追加ボタン
     var addBtn: UIBarButtonItem!
+    
+    // AdMob ID
+    let AdMobID = "ca-app-pub-3530000000000000/0123456789"
+    let TEST_DEVICE_ID = "61b0154xxxxxxxxxxxxxxxxxxxxxxxe0"
+    let AdMobTest:Bool = true
+    let SimulatorTest:Bool = true
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +41,38 @@ class indexViewController: UIViewController, UICollectionViewDelegate, UICollect
 //        var appDomain:String = NSBundle.mainBundle().bundleIdentifier!
 //        myDefault.removePersistentDomainForName(appDomain)
         //ここまで書いたら一度プレビュー再生して、コメントアウト
-
+        
+        // admob挿入
+        var admobView: GADBannerView = GADBannerView()
+        admobView = GADBannerView(adSize:kGADAdSizeBanner)
+        
+        //位置を指定
+        //        admobView.frame.origin = CGPointMake(0, 20)
+        //        下に表示
+        admobView.frame.origin = CGPointMake(0, self.view.frame.size.height - admobView.frame.height)
+        
+        
+        //サイズを指定
+        admobView.frame.size = CGSizeMake(self.view.frame.width, admobView.frame.height)
+        admobView.adUnitID = AdMobID
+//        admobView.delegate = self
+        admobView.rootViewController = self
+        
+        let admobRequest:GADRequest = GADRequest()
+        
+        if AdMobTest {
+            if SimulatorTest {
+                admobRequest.testDevices = [kGADSimulatorID]
+            }
+            else {
+                admobRequest.testDevices = [TEST_DEVICE_ID]
+            }
+            
+        }
+        
+        admobView.loadRequest(admobRequest)
+        
+        self.view.addSubview(admobView)
 
     }
     
