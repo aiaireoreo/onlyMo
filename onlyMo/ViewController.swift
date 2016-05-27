@@ -38,6 +38,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
     var selectAssetsUrl = ""
 //    var selectedIndex = -1
     
+    
+    //起動画面サイズの取得
+    let myBoundsize:CGSize = UIScreen.mainScreen().bounds.size
+    
 
 
     override func viewDidLoad() {
@@ -294,14 +298,29 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
             print("テキストフィールドの下辺：(txtLimit)")
             print("キーボードの上辺：(kbdLimit)")
             
+            
             if txtLimit >= kbdLimit {
-                scvBackGround.contentOffset.y = txtLimit - kbdLimit
+                
+                if myBoundsize.height == 480 { //4sだったら
+
+                    scvBackGround.contentOffset.y = txtLimit - kbdLimit - 70
+                
+                } else {
+                    
+                    scvBackGround.contentOffset.y = txtLimit - kbdLimit
+
+                }
             }
         }
     }
     
+    
     func handleKeyboardWillHideNotification(notification: NSNotification) {
+        
+        
         scvBackGround.contentOffset.y = -64 //ここでスクロールの上がり値を微調整する
+      
+
     }
     
     override func viewWillAppear(animated: Bool) {
